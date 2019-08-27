@@ -8,11 +8,20 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
-public class Aeroplane extends JFrame {
+public class Aeroplane_client extends JFrame {
 
 	/**
 	 * 
@@ -32,7 +41,7 @@ public class Aeroplane extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Aeroplane frame = new Aeroplane();
+					Aeroplane_client frame = new Aeroplane_client();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,10 +50,15 @@ public class Aeroplane extends JFrame {
 		});
 	}
 	
+	Socket client = null;
+    int portnumber = 2345;
+	
 	/**
 	 * Create the frame.
+	 * @throws IOException 
+	 * @throws UnknownHostException 
 	 */
-	public Aeroplane() {
+	public Aeroplane_client() throws UnknownHostException, IOException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -52,7 +66,14 @@ public class Aeroplane extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		System.out.println("Flight");
+		client = new Socket(InetAddress.getLocalHost(), portnumber);
+        System.out.println("Client socket is created " + client);
+        
+        OutputStream clientOut = client.getOutputStream();
+        PrintWriter pw = new PrintWriter(clientOut, true);
+        
+        InputStream clientIn = client.getInputStream();
+        BufferedReader br = new BufferedReader(new InputStreamReader(clientIn));
 		
 		JLabel lblAeroplaneId = new JLabel("Flight ID:");
 		lblAeroplaneId.setBounds(21, 34, 77, 14);
@@ -100,31 +121,23 @@ public class Aeroplane extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				try {
-					config = new RS2XMLConfig();
-					ResultSet rs = config.getFlightDetails(Integer.parseInt(textField.getText().toString()));
-					if(rs.next()) {
-						name = rs.getString("name");
-						seat = rs.getInt("seats");
-						label.setText(name);
-						label_1.setText(Integer.toString(seat));
-					}
-					else {
-						label_2.setText("ID doesnot exist...");
-					}
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				if(seat == 0) {
-					label_3.setText("No seats are available longer...");
-					btnBookNow.setEnabled(false);
-				}
-				else {
-					label_3.setText("");
-					btnBookNow.setEnabled(true);
-				}
-				
+	                String msg = "";
+	                	                
+	                System.out.println("Enter your name. Type Bye to exit. ");
+	                msg = textField.getText().toString();
+	                pw.println(msg);
+	                //value stores the details from the server
+	                String value = br.readLine();
+	                System.out.println("Message returned from the server = " + value);
+	                String details[] = value.split(" ");
+	                label.setText(details[0]);
+	                label_1.setText(details[1]);
+	                pw.close();
+	                br.close();
+	                client.close();
+	            } catch (IOException ie) {
+	                System.out.println("I/O error - Start server and turn off Firewall" + ie);
+	            }
 			}
 		});
 		btnSearch.setBounds(161, 30, 77, 23);
@@ -143,9 +156,6 @@ public class Aeroplane extends JFrame {
 					try {
 						config.updateFlightDetails(Integer.parseInt(textField.getText().toString()), count);
 						label_3.setText(update_seat+" seats are booked...");
-					} catch (NumberFormatException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
