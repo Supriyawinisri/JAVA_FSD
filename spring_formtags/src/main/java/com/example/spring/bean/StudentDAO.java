@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-
 @Component("stud")
 public class StudentDAO {
 	
@@ -23,10 +22,9 @@ public class StudentDAO {
 	{
 		try {
 			Object obj[] = {student.getFirstName()};
-			String query = "insert into emp(fname) values (?)";
-			jTemplate.update(query, obj);
+			String query = "insert into emp(fname) values (shanmugapriya)";
+			jTemplate.update(query);
 			System.out.println("inserted..!");
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

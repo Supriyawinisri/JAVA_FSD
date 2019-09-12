@@ -1,8 +1,5 @@
 package com.example.spring.bean;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
