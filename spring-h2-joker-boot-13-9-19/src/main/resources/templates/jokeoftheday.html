@@ -1,10 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+	<link rel="stylesheet"
+		href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+		crossorigin="anonymous">
+	<meta charset="UTF-8" />
+	<title>League List</title>
 </head>
 <body>
-
+<table class="table">
+	<thead class="thead-dark">
+		<tr>
+			<th scope="col">JOKE OF THE DAY</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="j : ${theJoke}">			
+			<td th:text="${j.joke}">1945</td>
+		</tr>
+</table>
 </body>
 </html>
