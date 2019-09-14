@@ -1,0 +1,38 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+	<title>Add</title>
+</head>
+<body>
+<div class="container">
+		<h3>Add Employee</h3>
+		<hr>
+		<p class="h4 mb-4">Employee Details</p>
+		<form action="#" th:action="@{/api/save-employee}"
+						 th:object="${employee}" method="POST">
+			
+			<input type="hidden" th:field="*{id}" />
+			<input type="text" th:field="*{fname}"
+					class="form-control mb-4 col-4" placeholder="Enter Firstname..." required="required">
+			<input type="text" th:field="*{lname}"
+					class="form-control mb-4 col-4" placeholder="Enter Lastname..." required="required">
+			<input type="email" th:field="*{email}"
+					class="form-control mb-4 col-4" placeholder="Enter Email..." required="required">
+			<select th:field="*{empType}" class="form-control mb-4 col-4">
+			    <option th:value="'Employee'" th:text="Employee"></option>
+			    <option th:value="'Permanent_Employee'" th:text="Permanent_Employee"></option>
+			    <option th:value="'Contract_Employee'" th:text="Contract_Employee"></option>
+			</select>
+			<button type="submit" class="btn btn-info col-2">Add</button>
+		</form>
+		<hr>
+	</div>
+</body>
+</html>

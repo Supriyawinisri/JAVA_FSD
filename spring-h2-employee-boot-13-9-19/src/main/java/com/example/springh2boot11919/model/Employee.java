@@ -31,7 +31,7 @@ public class Employee {
 		this.empType = empType;
 	}
 
-	public Employee(String fname, String lname, String email, int hrPerPaid, int contractHrs, String empType) {
+	public Employee(String fname, String lname, String email, String empType, int hrPerPaid, int contractHrs) {
 		super();
 		this.fname = fname;
 		this.lname = lname;
@@ -41,7 +41,7 @@ public class Employee {
 		this.empType = empType;
 	}
 
-	public Employee(String fname, String lname, String email, double salary, int commision, String empType) {
+	public Employee(String fname, String lname, String email, String empType, double salary, int commision) {
 		super();
 		this.fname = fname;
 		this.lname = lname;

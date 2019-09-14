@@ -1,0 +1,34 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+	<title>Add</title>
+</head>
+<body>
+<div class="container">
+		<h3>Contract Employee</h3>
+		<hr>
+		<p class="h4 mb-4">Employee Details</p>
+		<form action="#" th:action="@{/api/save-other-employee}"
+						 th:object="${saveemployee}" method="POST">
+			<input type="hidden" th:field="*{id}" />
+			<input type="hidden" th:field="*{fname}">
+			<input type="hidden" th:field="*{lname}">
+			<input type="hidden" th:field="*{email}">
+			<input type="hidden" th:field="*{empType}">
+			<input type="number" th:field="*{salary}"
+					class="form-control mb-4 col-4" placeholder="Salary..." required="required">
+			<input type="number" th:field="*{commision}"
+					class="form-control mb-4 col-4" placeholder="Commission..." required="required">
+			<button type="submit" class="btn btn-info col-2">Add</button>
+		</form>
+		<hr>
+	</div>
+</body>
+</html>
